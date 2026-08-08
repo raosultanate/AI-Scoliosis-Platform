@@ -1,0 +1,12 @@
+pipeline:
+  annotation_format: auto
+  coordinate_space: auto
+  reference_tolerance_degrees: 5.0
+  image_extensions: [".png", ".jpg", ".jpeg", ".tif", ".tiff", ".bmp"]
+visualization:
+  landmark_radius: 4
+  line_width: 2
+  dpi: 150
+logging:
+  level: INFO
+

@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "study_id": "synthetic-001",
+  "coordinate_space": "normalized",
+  "reference_cobb_angle_degrees": 30.0,
+  "vertebrae": [
+    {
+      "label": "T4",
+      "ordinal": 0,
+      "top_left": [0.40, 0.186603],
+      "top_right": [0.60, 0.213397],
+      "bottom_left": [0.40, 0.241184],
+      "bottom_right": [0.60, 0.258816]
+    },
+    {
+      "label": "T8",
+      "ordinal": 1,
+      "top_left": [0.40, 0.45],
+      "top_right": [0.60, 0.45],
+      "bottom_left": [0.40, 0.50],
+      "bottom_right": [0.60, 0.50]
+    },
+    {
+      "label": "T12",
+      "ordinal": 2,
+      "top_left": [0.40, 0.708816],
+      "top_right": [0.60, 0.691184],
+      "bottom_left": [0.40, 0.763397],
+      "bottom_right": [0.60, 0.736603]
+    }
+  ]
+}
