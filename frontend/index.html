@@ -183,6 +183,155 @@
         </ol>
       </section>
 
+      <section class="explainer" id="radiologist-method" aria-labelledby="radiologist-title">
+        <div class="section-heading centered">
+          <p class="eyebrow">The traditional clinical method</p>
+          <h2 id="radiologist-title">How a radiologist measures a Cobb angle</h2>
+          <p>
+            The same method doctors have used with a ruler and protractor since 1948. SpineAngle's
+            calculation is built to match it exactly — just done with trigonometry instead of a pencil.
+          </p>
+        </div>
+
+        <div class="explainer-body">
+          <ol class="method-steps">
+            <li>
+              <span>1</span>
+              <div>
+                <h3>Find the two "end vertebrae"</h3>
+                <p>
+                  Looking down the spine, the radiologist finds the vertebra above the curve that is
+                  tilted most steeply into it, and the one below that is tilted most steeply the other
+                  way. These bookends are called the upper and lower <strong>end vertebrae</strong> —
+                  everything between them is the curve being measured.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>2</span>
+              <div>
+                <h3>Trace the tilted edges</h3>
+                <p>
+                  A line is drawn along the top edge of the upper end vertebra, and another along the
+                  bottom edge of the lower end vertebra. In medical terms, these edges are called
+                  <strong>endplates</strong>.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>3</span>
+              <div>
+                <h3>Extend the lines until they cross</h3>
+                <p>
+                  The two endplates usually tilt toward each other, so extending both lines far enough
+                  makes them meet at a point, often well off to one side of the image. (Some radiologists
+                  instead draw a perpendicular off each endplate and measure where <em>those</em> cross —
+                  easier to fit on a small film, and mathematically the exact same angle. See why below.)
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>4</span>
+              <div>
+                <h3>Measure the angle between them</h3>
+                <p>
+                  The angle at that crossing point is the Cobb angle — traditionally read off with a
+                  protractor, or with a digital angle tool on modern scanning software. A bigger angle
+                  means a sharper curve.
+                </p>
+              </div>
+            </li>
+          </ol>
+
+          <div class="formula-panel">
+            <p class="eyebrow">The math, plainly</p>
+            <div class="formula-box">
+              <span class="formula-line">Every line has a "tilt" — how many degrees it leans away from perfectly flat.</span>
+              <span class="formula-line"><strong>tilt = arctan( rise ÷ run )</strong></span>
+              <span class="formula-line">rise = how far the line moves up or down between its two ends</span>
+              <span class="formula-line">run = how far it moves side to side</span>
+              <span class="formula-line"><strong>Cobb angle = the difference between the two endplates' tilts</strong>, corrected to always land between 0° and 90°</span>
+            </div>
+            <p class="formula-note">
+              Why perpendiculars give the same answer: rotating two lines by the same 90° never
+              changes the angle between them — like turning two crossed rulers together. So a
+              radiologist can measure whichever pair of lines is easier to draw.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="explainer" id="ai-method" aria-labelledby="ai-title">
+        <div class="section-heading centered">
+          <p class="eyebrow">The computer's version of the same idea</p>
+          <h2 id="ai-title">How SpineAngle's AI will evaluate it</h2>
+          <p>
+            This splits into two stages. <strong>Measuring</strong> — turning known vertebra corners
+            into an angle — is real and running in this preview today. <strong>Seeing</strong> —
+            finding those corners automatically on a real X-ray — is a planned next step, not yet
+            connected. That's why this preview offers a safe worked example instead of accepting a
+            real X-ray for analysis.
+          </p>
+        </div>
+
+        <div class="explainer-body">
+          <div class="stage-list">
+            <article class="stage-card">
+              <span class="stage-badge stage-badge-live">Live in this preview</span>
+              <h3>Stage 1 — Measuring</h3>
+              <p>
+                Every vertebra is described by four corner points (top-left, top-right, bottom-left,
+                bottom-right) — currently supplied by a clinician's own annotation of the image, the
+                same starting point a radiologist works from.
+              </p>
+              <ul>
+                <li>For every vertebra, the computer builds a line for its top edge and a line for its
+                  bottom edge from those four corners.</li>
+                <li>It calculates each line's exact tilt using the same trigonometry a radiologist's
+                  protractor approximates by hand — just computed precisely instead of read off a scale.</li>
+                <li>Rather than checking only the vertebrae a human eye would pick, it tests the angle
+                  for <em>every</em> possible pair of "upper vertebra top edge" and "lower vertebra bottom
+                  edge," in top-to-bottom order, and keeps the largest one — the same "most-tilted pair"
+                  idea a radiologist uses, just verified exhaustively instead of by eye.</li>
+                <li>Every number behind the final angle — which vertebrae were used, their exact tilt —
+                  is shown alongside the result, so the answer can be checked, not just trusted.</li>
+              </ul>
+            </article>
+
+            <article class="stage-card">
+              <span class="stage-badge stage-badge-planned">Planned next step</span>
+              <h3>Stage 2 — Seeing</h3>
+              <p>
+                Right now, a person has to mark those four corners per vertebra by hand. The planned
+                next step trains a vision model on many X-rays, each labeled by a clinician, so it
+                learns to recognize a vertebra's corners the way a trained eye does.
+              </p>
+              <p>
+                Once that model hands off the same four corner points, Stage 1's math runs completely
+                unchanged. Teaching the computer to <em>see</em> a vertebra doesn't change how the angle
+                itself gets <em>calculated</em> — this project deliberately keeps those two jobs separate,
+                so a smarter corner-finder later never touches the measuring logic already verified today.
+              </p>
+            </article>
+          </div>
+
+          <div class="formula-panel">
+            <p class="eyebrow">The math, plainly</p>
+            <div class="formula-box">
+              <span class="formula-line">For each endplate line, from its two corner points (x₁,y₁) and (x₂,y₂):</span>
+              <span class="formula-line"><strong>tilt = atan2( y₂−y₁, x₂−x₁ )</strong> — adjusted to always fall between −90° and 90°, since a line can't tell "up" from "down" along itself</span>
+              <span class="formula-line">For each candidate pair of endplates:</span>
+              <span class="formula-line"><strong>angle = the smaller of |tilt₁ − tilt₂| and 180° − |tilt₁ − tilt₂|</strong></span>
+              <span class="formula-line"><strong>Cobb angle = the largest angle found across every valid pair</strong> (always between 0° and 90°)</span>
+            </div>
+            <p class="formula-note">
+              This is the exact "difference in tilt" idea used by hand — just checked exactly, for
+              every vertebra, in a fraction of a second, with the working shown.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section class="safety-banner" aria-label="Research use notice">
         <div class="safety-icon" aria-hidden="true">+</div>
         <div>

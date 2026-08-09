@@ -911,6 +911,156 @@ h3 {
   font-size: 0.84rem;
 }
 
+.explainer {
+  padding: 80px 0;
+  border-top: 1px solid var(--line);
+}
+
+.explainer-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  gap: 44px;
+  align-items: start;
+  margin-top: 44px;
+}
+
+.method-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.method-steps li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+}
+
+.method-steps li > span {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.method-steps h3 {
+  margin-bottom: 6px;
+  font-size: 1.02rem;
+}
+
+.method-steps p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.stage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.stage-card {
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.stage-badge {
+  display: inline-flex;
+  margin-bottom: 14px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.stage-badge-live {
+  background: var(--teal-light);
+  color: var(--teal-dark);
+}
+
+.stage-badge-planned {
+  background: #f8e1c0;
+  color: #8b5713;
+}
+
+.stage-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.08rem;
+}
+
+.stage-card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.stage-card p:last-child {
+  margin-bottom: 0;
+}
+
+.stage-card ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.stage-card ul li:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.formula-panel {
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--soft);
+}
+
+.formula-box {
+  margin: 14px 0;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.84rem;
+  line-height: 1.8;
+}
+
+.formula-box .formula-line {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.formula-box .formula-line:last-child {
+  margin-bottom: 0;
+}
+
+.formula-box strong {
+  color: var(--teal-dark);
+}
+
+.formula-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 .safety-banner {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -992,7 +1142,8 @@ footer > a:last-child {
   }
 
   .analyzer-grid,
-  .result-card {
+  .result-card,
+  .explainer-body {
     grid-template-columns: 1fr;
   }
 
@@ -1052,8 +1203,21 @@ footer > a:last-child {
   }
 
   .analyzer-section,
-  .how-it-works {
+  .how-it-works,
+  .explainer {
     padding: 70px 0;
+  }
+
+  .stage-card {
+    padding: 22px;
+  }
+
+  .formula-panel {
+    padding: 20px;
+  }
+
+  .formula-box {
+    font-size: 0.78rem;
   }
 
   .drop-zone {
