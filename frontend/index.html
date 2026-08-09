@@ -259,6 +259,27 @@
             </p>
           </div>
         </div>
+
+        <figure class="diagram-figure">
+          <svg viewBox="0 0 320 260" role="img" aria-labelledby="cobb-diagram-title" aria-describedby="cobb-diagram-caption">
+            <title id="cobb-diagram-title">Diagram of the two-line Cobb angle method</title>
+            <line x1="40" y1="45" x2="220" y2="75" class="diagram-endplate" />
+            <line x1="60" y1="230" x2="230" y2="195" class="diagram-endplate" />
+            <line x1="220" y1="75" x2="213.7" y2="115.6" class="diagram-perp" />
+            <line x1="230" y1="195" x2="213.7" y2="115.6" class="diagram-perp" />
+            <path d="M 216.76 95.84 Q 213.7 115.6 217.72 135.2" class="diagram-arc" />
+            <circle cx="213.7" cy="115.6" r="3.5" class="diagram-point" />
+            <text x="42" y="33" class="diagram-label">Upper endplate</text>
+            <text x="60" y="250" class="diagram-label">Lower endplate</text>
+            <text x="228" y="112" class="diagram-label diagram-label-accent">Cobb angle</text>
+            <text x="150" y="105" class="diagram-label diagram-label-muted" text-anchor="middle">perpendiculars</text>
+          </svg>
+          <figcaption id="cobb-diagram-caption">
+            The upper and lower endplate lines (solid) rarely cross inside the image, so a
+            perpendicular (dashed) is dropped from each instead — where those meet is where the
+            Cobb angle is actually measured.
+          </figcaption>
+        </figure>
       </section>
 
       <section class="explainer" id="ai-method" aria-labelledby="ai-title">
@@ -330,6 +351,25 @@
             </p>
           </div>
         </div>
+
+        <figure class="example-figure">
+          <img
+            src="/assets/example-annotated.png"
+            alt="The bundled synthetic X-ray, annotated by SpineAngle: cyan dots mark every vertebra
+              corner, faint amber lines are every endplate considered, and the highlighted red and
+              green lines are the selected upper and lower endplates whose angle became the 30° result"
+          />
+          <figcaption>
+            <p class="eyebrow">What Stage 1 actually produces</p>
+            <p>
+              This is real output from this preview, not a mockup. Cyan dots mark every vertebra's
+              four corners. Faint amber lines are every endplate the computer considered. The
+              <strong class="swatch-red">red</strong> and <strong class="swatch-green">green</strong>
+              lines are the exact pair it selected as most tilted — the two endplates whose angle
+              became this study's 30° Cobb angle.
+            </p>
+          </figcaption>
+        </figure>
       </section>
 
       <section class="safety-banner" aria-label="Research use notice">

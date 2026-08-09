@@ -1061,6 +1061,113 @@ h3 {
   font-size: 0.85rem;
 }
 
+.diagram-figure {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) 1fr;
+  gap: 32px;
+  align-items: center;
+  margin: 44px 0 0;
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.diagram-figure svg {
+  width: 100%;
+  height: auto;
+}
+
+.diagram-endplate {
+  stroke: var(--teal-dark);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.diagram-perp {
+  stroke: var(--amber);
+  stroke-width: 2.5;
+  stroke-dasharray: 5 5;
+  stroke-linecap: round;
+}
+
+.diagram-arc {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+
+.diagram-point {
+  fill: var(--amber);
+}
+
+.diagram-label {
+  fill: var(--ink);
+  font-family: Inter, ui-sans-serif, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.diagram-label-accent {
+  fill: var(--teal-dark);
+}
+
+.diagram-label-muted {
+  fill: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.diagram-figure figcaption {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.example-figure {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) 1fr;
+  gap: 0;
+  overflow: hidden;
+  margin: 44px 0 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.example-figure img {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  max-height: 460px;
+  object-fit: cover;
+  object-position: top;
+  background: #0a2024;
+}
+
+.example-figure figcaption {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(24px, 3vw, 38px);
+}
+
+.example-figure figcaption p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+.swatch-red {
+  color: #d9382e;
+}
+
+.swatch-green {
+  color: #2a9d55;
+}
+
 .safety-banner {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -1143,8 +1250,14 @@ footer > a:last-child {
 
   .analyzer-grid,
   .result-card,
-  .explainer-body {
+  .explainer-body,
+  .diagram-figure,
+  .example-figure {
     grid-template-columns: 1fr;
+  }
+
+  .example-figure img {
+    max-height: 320px;
   }
 
   .steps {
