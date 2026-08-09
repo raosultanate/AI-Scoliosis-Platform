@@ -1,4 +1,4 @@
 # Database
 
-Deferred. No patient or study persistence is introduced in Version 1A.
-
+Deferred. The current FastAPI service writes generated synthetic artifacts to its configured output
+directory but introduces no patient, user, or study database persistence.

@@ -21,7 +21,8 @@ The planned product path from this foundation to a FastAPI application with keyp
 clinician correction, deployment, and validation is documented in
 [[End-to-End AI Web App Roadmap]].
 
-- Latest session: [[2026-08-05 - Version 1A Bootstrap]]
+- Latest session: [[2026-08-08 - Web MVP and Docker]]
+- Previous session: [[2026-08-05 - Version 1A Bootstrap]]
 - Current roadmap: [[Version 1A Roadmap]]
 - End-to-end AI plan: [[End-to-End AI Web App Roadmap]]
 - Architecture: [[Version 1A Architecture]]
@@ -36,6 +37,11 @@ A runnable single-study pipeline loads common raster images and JSON/CSV/TXT ann
 normalized coordinates to pixels, draws all landmarks and endplates, calculates a single maximum
 Cobb angle, compares it to an optional reference, and writes annotated PNG plus JSON/Markdown
 reports. A deterministic 30° synthetic case and automated tests are included.
+
+A Dockerized FastAPI service now exposes health, capability, and synthetic-analysis endpoints. Its
+responsive website lets a user preview a PNG or JPEG locally, explains Cobb angles in plain
+language, and shows an annotated 30° demonstration. It does not upload or analyze real X-rays until
+the landmark model is connected.
 
 ## Immediate next action
 

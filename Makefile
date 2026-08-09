@@ -1,7 +1,10 @@
 PYTHON ?= python3
 VENV_PYTHON := .venv/bin/python
+DOCKER_IMAGE ?= ai-scoliosis-platform:local
+DOCKER_PORT ?= 8000
 
-.PHONY: install test lint typecheck verify fixture demo
+.PHONY: install test lint typecheck verify fixture demo api \
+	docker-build docker-run docker-up docker-down docker-config docker-smoke
 
 install:
 	$(PYTHON) -m venv .venv
@@ -26,3 +29,33 @@ demo: fixture
 	.venv/bin/scoliosis-v1a analyze --image tests/fixtures/synthetic_xray.png \
 		--landmarks tests/fixtures/synthetic_landmarks.json \
 		--output-dir data/outputs/synthetic --config config/v1a.yaml
+
+api:
+	$(VENV_PYTHON) -m uvicorn scoliosis_platform.api:app --reload
+
+docker-build:
+	docker build --tag $(DOCKER_IMAGE) .
+
+docker-run:
+	docker run --rm --init \
+		--publish $(DOCKER_PORT):8000 \
+		--read-only \
+		--tmpfs /tmp:rw,noexec,nosuid,size=64m \
+		--cap-drop ALL \
+		--security-opt no-new-privileges \
+		--mount type=volume,src=ai-scoliosis-artifacts,dst=/app/data/outputs/api \
+		$(DOCKER_IMAGE)
+
+docker-up:
+	docker compose up --build
+
+docker-down:
+	docker compose down
+
+docker-config:
+	docker compose config --quiet
+
+docker-smoke:
+	curl --fail --silent http://127.0.0.1:$(DOCKER_PORT)/health
+	curl --fail --silent --request POST \
+		http://127.0.0.1:$(DOCKER_PORT)/api/v1/demo/synthetic

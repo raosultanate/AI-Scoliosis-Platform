@@ -13,6 +13,7 @@ __pycache__/
 .ruff_cache/
 .coverage
 htmlcov/
+/graphify-out/
 build/
 dist/
 *.egg-info/

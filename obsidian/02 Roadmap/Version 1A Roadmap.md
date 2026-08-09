@@ -21,6 +21,18 @@ status: in-progress
 - [x] Synthetic fixture and deterministic tests
 - [x] Architecture, schema, validation, and data-handling documentation
 
+## Completed web foundation
+
+- [x] FastAPI application and health endpoint
+- [x] Capability endpoint that reports model readiness honestly
+- [x] Synthetic analysis endpoint using the existing pipeline
+- [x] Responsive plain-language website and local PNG/JPEG preview
+- [x] Annotated synthetic Cobb-angle result in the browser
+- [x] Docker image, Docker Compose service, health check, and persistent artifact volume
+
+Real-X-ray upload and landmark inference remain outside Version 1A until a validated detector and
+the required security controls are available. See [[End-to-End AI Web App Roadmap]].
+
 ## Dataset-dependent work
 
 - [ ] Select and document the initial public scoliosis dataset
@@ -31,4 +43,3 @@ status: in-progress
 - [ ] Review results with a qualified clinical stakeholder
 
 Later versions remain intentionally out of scope. See [[Product Vision]].
-

@@ -8,7 +8,7 @@ tags:
   - roadmap
   - ai-engineering
   - web-app
-status: planned
+status: in-progress
 created: 2026-08-08
 updated: 2026-08-08
 related:
@@ -97,16 +97,25 @@ business logic.
 
 Build the product workflow before adding uncertain model behavior.
 
+> [!success] Foundation available
+> The FastAPI application, health and capability endpoints, synthetic-analysis endpoint,
+> responsive browser experience, API tests, and Docker deployment are working. Real-image upload,
+> editable landmarks, and model inference remain pending.
+
 ### Deliverables
 
-- [ ] Create the FastAPI application and health endpoint
+- [x] Create the FastAPI application and health endpoint
 - [ ] Add validated PNG/JPEG upload with file-size and content-type limits
-- [ ] Run the existing geometry pipeline from an API endpoint
+- [x] Run the existing geometry pipeline from a synthetic API endpoint
 - [ ] Build a responsive image viewer with landmark and endplate overlays
 - [ ] Let a user add, move, relabel, and delete vertebral landmarks
 - [ ] Return the Cobb angle, selected end vertebrae, warnings, and downloadable report
 - [ ] Add API, geometry-regression, and browser workflow tests
 - [ ] Define retention and deletion behavior for uploaded images
+
+The current browser can select and preview PNG/JPEG files locally, but it intentionally does not
+transmit them. The safe synthetic workflow already returns the calculated angle, selected end
+vertebrae, annotated image, and report artifacts.
 
 ### Exit gate
 
@@ -207,6 +216,11 @@ end-to-end testing.
 
 ## Phase 5 — Package, deploy, and operate
 
+> [!info] Early container milestone
+> The current API, browser UI, geometry engine, and synthetic fixture are packaged in one hardened
+> Docker image and Docker Compose service. Model packaging, production authentication, CI/CD, and
+> operational controls remain future work.
+
 ### Deliverables
 
 - [ ] Containerize the API, frontend, geometry engine, and model artifact
@@ -256,9 +270,9 @@ monitoring.
 Work on these items next, in order:
 
 1. [ ] Complete the real-dataset decision and annotation-semantics record.
-2. [ ] Define the FastAPI request/response contract around the existing landmark schema.
-3. [ ] Create a minimal upload endpoint that runs the current non-AI pipeline.
-4. [ ] Build the browser overlay and drag-to-correct interaction.
+2. [x] Define the initial FastAPI response contract around the existing landmark schema.
+3. [x] Create a synthetic endpoint that runs the current non-AI pipeline.
+4. [ ] Add a validated real-image upload endpoint and browser overlay with drag-to-correct points.
 5. [ ] Save corrections in the canonical annotation format.
 6. [ ] Add patient-level dataset manifests and validation scripts.
 7. [ ] Train Keypoint R-CNN on a small verified subset as a pipeline smoke test.

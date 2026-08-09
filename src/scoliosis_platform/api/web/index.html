@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A research preview for explaining Cobb-angle measurement from spine X-rays."
+    />
+    <title>SpineAngle — Understand a Cobb angle</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <script src="/assets/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#analyzer">Skip to X-ray analyzer</a>
+
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="SpineAngle home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 36 36" role="img">
+            <path d="M18 4c-4 3-5 6-2 9 3 3 3 6 0 9-3 3-2 7 2 10" />
+            <circle cx="15" cy="8" r="2" />
+            <circle cx="18" cy="15" r="2" />
+            <circle cx="17" cy="22" r="2" />
+            <circle cx="20" cy="29" r="2" />
+          </svg>
+        </span>
+        <span>SpineAngle</span>
+      </a>
+      <div class="header-actions">
+        <a class="docs-link" href="/docs">API docs</a>
+        <span class="preview-pill"><span></span> Research preview</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">A clearer way to understand spinal curvature</p>
+          <h1 id="page-title">What is the Cobb angle in this X-ray?</h1>
+          <p class="hero-description">
+            Add a spine X-ray and ask in everyday language. SpineAngle is being built to find
+            the relevant vertebrae, measure their tilt, and show you how the angle was calculated.
+          </p>
+          <div class="plain-language-note">
+            <span aria-hidden="true">°</span>
+            <p>
+              <strong>Cobb angle, simply:</strong> the angle between the most tilted vertebrae
+              at the top and bottom of a spinal curve.
+            </p>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="scan-frame">
+            <div class="scan-glow"></div>
+            <div class="spine">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="measure-line measure-line-top"></div>
+            <div class="measure-line measure-line-bottom"></div>
+            <div class="angle-chip">30°</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="analyzer-section" id="analyzer" aria-labelledby="analyzer-title">
+        <div class="section-heading">
+          <p class="eyebrow">Try the experience</p>
+          <h2 id="analyzer-title">Ask about an X-ray</h2>
+          <p>PNG or JPEG, up to 10 MB. DICOM support will come later.</p>
+        </div>
+
+        <div class="analyzer-grid">
+          <div class="upload-card">
+            <div
+              class="drop-zone"
+              id="drop-zone"
+              role="button"
+              tabindex="0"
+              aria-describedby="upload-help upload-privacy"
+            >
+              <input id="xray-input" type="file" accept="image/png,image/jpeg,.png,.jpg,.jpeg" />
+              <div class="upload-empty" id="upload-empty">
+                <div class="upload-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5" />
+                  </svg>
+                </div>
+                <h3>Drop your X-ray here</h3>
+                <p id="upload-help">or select an image from your device</p>
+                <span class="choose-file">Choose an image</span>
+              </div>
+              <div class="upload-preview" id="upload-preview" hidden>
+                <img id="preview-image" alt="Preview of the selected spine X-ray" />
+                <div class="file-summary">
+                  <span class="file-type" id="file-type">JPG</span>
+                  <div>
+                    <strong id="file-name"></strong>
+                    <small id="file-size"></small>
+                  </div>
+                  <button class="icon-button" id="remove-image" type="button" aria-label="Remove image">×</button>
+                </div>
+              </div>
+            </div>
+
+            <p class="privacy-note" id="upload-privacy">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2m-11 0h12v10H6z" /></svg>
+              Your selected image stays on this device in the current preview.
+            </p>
+          </div>
+
+          <div class="question-card">
+            <label for="question-input">What would you like to know?</label>
+            <div class="question-input-wrap">
+              <textarea id="question-input" rows="3">What is the Cobb angle in this image?</textarea>
+              <span class="character-hint">Plain language is perfect</span>
+            </div>
+            <button class="primary-button" id="analyze-button" type="button">
+              <span>Analyze my X-ray</span>
+              <span aria-hidden="true">→</span>
+            </button>
+            <div class="or-divider"><span>or</span></div>
+            <button class="secondary-button" id="sample-button" type="button">
+              <span class="sample-thumbnail" aria-hidden="true"></span>
+              <span><strong>Try the safe sample X-ray</strong><small>See the working 30° demonstration</small></span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="status-card" id="status-card" role="status" aria-live="polite" hidden>
+          <div class="status-icon" aria-hidden="true">i</div>
+          <div>
+            <h3 id="status-title">The landmark AI is the next milestone</h3>
+            <p id="status-message"></p>
+          </div>
+          <button class="text-button" id="status-sample-button" type="button">Try the sample instead</button>
+        </div>
+
+        <section class="result-card" id="result-card" aria-labelledby="result-title" hidden>
+          <div class="result-image-wrap">
+            <img id="result-image" alt="Synthetic X-ray annotated with the selected Cobb endplates" />
+            <span class="image-badge">Annotated result</span>
+          </div>
+          <div class="result-content">
+            <p class="eyebrow">Sample analysis complete</p>
+            <div class="result-heading-row">
+              <div>
+                <h2 id="result-title">Cobb angle</h2>
+                <p>A known synthetic case used to verify the software workflow.</p>
+              </div>
+              <div class="angle-result"><strong id="angle-value">—</strong><span>degrees</span></div>
+            </div>
+            <div class="result-explanation">
+              <h3>What this means</h3>
+              <p id="angle-explanation"></p>
+            </div>
+            <dl class="measurement-details">
+              <div><dt>Upper vertebra</dt><dd id="upper-vertebra">—</dd></div>
+              <div><dt>Lower vertebra</dt><dd id="lower-vertebra">—</dd></div>
+              <div><dt>Method</dt><dd>Endplate angle</dd></div>
+            </dl>
+            <div class="result-actions">
+              <a class="primary-button compact" id="annotated-link" href="#" target="_blank" rel="noreferrer">View full image</a>
+              <button class="text-button" id="start-over" type="button">Start over</button>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="how-it-works" aria-labelledby="how-title">
+        <div class="section-heading centered">
+          <p class="eyebrow">Behind the answer</p>
+          <h2 id="how-title">How Cobb-angle analysis works</h2>
+          <p>The final product will turn a complex medical measurement into four understandable steps.</p>
+        </div>
+        <ol class="steps">
+          <li><span>1</span><h3>Add an X-ray</h3><p>A front-facing spine X-ray is prepared for analysis.</p></li>
+          <li><span>2</span><h3>Find vertebrae</h3><p>A vision model locates the corners of each vertebra.</p></li>
+          <li><span>3</span><h3>Measure the curve</h3><p>The software selects endplates and calculates their angle.</p></li>
+          <li><span>4</span><h3>Explain the result</h3><p>You see the angle, selected bones, and an annotated image.</p></li>
+        </ol>
+      </section>
+
+      <section class="safety-banner" aria-label="Research use notice">
+        <div class="safety-icon" aria-hidden="true">+</div>
+        <div>
+          <h2>A helpful explanation—not a diagnosis</h2>
+          <p>
+            SpineAngle is research software under development. A Cobb angle should be reviewed by a
+            qualified clinician and must not be used alone for treatment decisions.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand footer-brand" href="/">SpineAngle</a>
+      <p>Built for understandable, auditable scoliosis research.</p>
+      <a href="/docs">Developer API</a>
+    </footer>
+  </body>
+</html>

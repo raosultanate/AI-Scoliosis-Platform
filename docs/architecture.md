@@ -2,8 +2,13 @@
 
 ```mermaid
 flowchart LR
+    Browser["Responsive browser UI"] --> Capabilities["Capability endpoint"]
+    Browser --> Demo["Synthetic demo endpoint"]
+    Demo --> Pipeline["Application service"]
     Image["Raster image"] --> ImageLoader["Image loader"]
     Annotation["Clinician landmarks"] --> Adapter["Landmark adapter"]
+    Pipeline --> ImageLoader
+    Pipeline --> Adapter
     ImageLoader --> Normalize["Coordinate normalization"]
     Adapter --> Normalize
     Normalize --> Geometry["Pure geometry engine"]
@@ -27,12 +32,16 @@ lets a future landmark detector produce the same `StudyLandmarks` object without
 - `reports`: serializes auditable results; no calculation.
 - `pipeline.py`: composition and operational logging.
 - `cli.py`: command-line parsing only.
+- `api`: typed HTTP schemas, routing, and artifact links; delegates calculation to `pipeline.py`.
+- `api/web`: responsive static interface; previews selected images locally and only invokes the
+  synthetic endpoint while real-image inference is unavailable.
 
 ## Error policy
 
 Invalid inputs stop analysis with a specific exception. Version 1A does not impute missing points,
 guess a duplicate vertebral order, ignore a zero-length line, or fabricate a reference. This keeps
-data-quality failures visible.
+data-quality failures visible. The web boundary follows the same rule: it does not upload a real
+X-ray or fabricate a Cobb angle before an automated landmark detector is connected.
 
 ## Future seams
 
@@ -40,6 +49,5 @@ data-quality failures visible.
 - DICOM adapter with photometric interpretation and metadata controls
 - Clinician-selected end vertebrae and multi-curve results
 - AI detector implementing the same landmark output contract
-- Typed API request/response schemas wrapping the application service
+- General image and landmark upload endpoints with authentication and retention controls
 - Database persistence outside the geometry module
-
