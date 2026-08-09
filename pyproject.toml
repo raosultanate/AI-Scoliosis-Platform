@@ -38,7 +38,6 @@ packages = ["src/scoliosis_platform"]
 [tool.hatch.build]
 include = [
   "src/scoliosis_platform/**/*.py",
-  "src/scoliosis_platform/api/web/**",
 ]
 
 [tool.pytest.ini_options]

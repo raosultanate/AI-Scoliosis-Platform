@@ -33,8 +33,9 @@ lets a future landmark detector produce the same `StudyLandmarks` object without
 - `pipeline.py`: composition and operational logging.
 - `cli.py`: command-line parsing only.
 - `api`: typed HTTP schemas, routing, and artifact links; delegates calculation to `pipeline.py`.
-- `api/web`: responsive static interface; previews selected images locally and only invokes the
-  synthetic endpoint while real-image inference is unavailable.
+- `frontend`: responsive static interface (no build step), kept as a sibling of the Python package
+  rather than nested inside it; previews selected images locally and only invokes the synthetic
+  endpoint while real-image inference is unavailable.
 
 ## Error policy
 

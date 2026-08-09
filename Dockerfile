@@ -64,10 +64,12 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Pull in only the built venv (no source, no build tools) plus the runtime
-# assets the app reads directly off disk: pipeline config and the bundled
-# synthetic fixtures used by the /demo/synthetic endpoint.
+# assets the app reads directly off disk: pipeline config, the static
+# frontend (kept as a sibling folder to the Python package, not bundled
+# into it), and the synthetic fixtures used by the /demo/synthetic endpoint.
 COPY --from=builder /opt/venv /opt/venv
 COPY config ./config
+COPY frontend ./frontend
 COPY tests/fixtures ./tests/fixtures
 
 # Pre-create the directories the app writes to and hand them to appuser,

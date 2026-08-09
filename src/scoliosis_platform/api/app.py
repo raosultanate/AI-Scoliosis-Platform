@@ -111,7 +111,7 @@ def create_app(settings: ApiSettings | None = None) -> FastAPI:
 
     selected_settings = settings or ApiSettings.from_environment()
     selected_settings.output_root.mkdir(parents=True, exist_ok=True)
-    web_root = Path(__file__).resolve().parent / "web"
+    web_root = selected_settings.project_root / "frontend"
 
     application = FastAPI(
         title="AI Scoliosis Platform API",
