@@ -31,8 +31,9 @@ lets a future landmark detector produce the same `StudyLandmarks` object without
 - `visualization`: draws already-computed results; no business rules.
 - `reports`: serializes auditable results; no calculation.
 - `pipeline.py`: composition and operational logging.
-- `cli.py`: command-line parsing only.
 - `api`: typed HTTP schemas, routing, and artifact links; delegates calculation to `pipeline.py`.
+  This is the only supported entry point — Version 1A is strictly a web application, with no
+  command-line interface.
 - `frontend`: responsive static interface (no build step), kept as a sibling of the Python package
   rather than nested inside it; previews selected images locally and only invokes the synthetic
   endpoint while real-image inference is unavailable.
@@ -50,5 +51,7 @@ X-ray or fabricate a Cobb angle before an automated landmark detector is connect
 - DICOM adapter with photometric interpretation and metadata controls
 - Clinician-selected end vertebrae and multi-curve results
 - AI detector implementing the same landmark output contract
-- General image and landmark upload endpoints with authentication and retention controls
+- General image and landmark upload endpoints with authentication and retention controls — the
+  web-native replacement for ad hoc analysis of a caller's own image/landmark files, now that
+  there is no CLI
 - Database persistence outside the geometry module

@@ -24,20 +24,6 @@ override it: `make install PYTHON=/opt/homebrew/bin/python3.12` (or wherever you
 
 Changed a dependency in `pyproject.toml`? Run `make lock` to regenerate both lock files.
 
-## Run one study
-
-```bash
-scoliosis-v1a analyze \
-  --image tests/fixtures/synthetic_xray.png \
-  --landmarks tests/fixtures/synthetic_landmarks.json \
-  --output-dir data/outputs/synthetic \
-  --config config/v1a.yaml
-```
-
-Outputs are `annotated.png`, `measurement.json`, and `report.md`. The command fails loudly on an
-unsupported image, malformed landmarks, duplicate vertebral order, insufficient vertebrae, or a
-zero-length endplate.
-
 ## Run the FastAPI demonstration
 
 Start the development server after installing the project:
@@ -85,6 +71,12 @@ you intentionally want to delete the artifact volume.
 
 ## Real dataset integration checklist
 
+There is no CLI or upload endpoint for analyzing arbitrary images/landmarks yet — the web API
+currently only serves the bundled synthetic case (see `docs/architecture.md`'s "Future seams" for
+the planned general upload endpoint). Until that exists, running `pipeline.analyze_study()`
+against a real study means calling it directly from a short Python script, not through a shipped
+interface.
+
 1. Confirm the dataset license permits the intended research use.
 2. Document provenance, patient de-identification, annotation definition, vertebral ordering,
    coordinate space, image orientation, and reference-angle methodology.
@@ -97,4 +89,5 @@ you intentionally want to delete the artifact volume.
 ## Configuration
 
 `config/v1a.yaml` owns non-secret defaults. Set `SCOLIOSIS_CONFIG` to choose another file and
-`SCOLIOSIS_LOG_LEVEL` to override logging. Paths are CLI arguments and are never hardcoded.
+`SCOLIOSIS_LOG_LEVEL` to override logging. Paths are never hardcoded — the web API resolves them
+from `ApiSettings` (environment-variable overridable; see `api/README.md`).

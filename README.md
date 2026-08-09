@@ -5,8 +5,8 @@
 Production-oriented foundation for a long-lived medical imaging platform. The active scope is
 **Version 1A**: consume clinician-provided vertebral landmarks, compute Cobb angle geometry,
 validate against an optional reference, and produce traceable visual and machine-readable output.
-An initial FastAPI boundary and responsive browser experience expose the deterministic synthetic
-case for web integration work.
+This is strictly a web application — a FastAPI boundary and responsive browser experience expose
+the deterministic synthetic case for web integration work. There is no command-line interface.
 
 > [!CAUTION]
 > This is research software, not a medical device. It must not be used for diagnosis or treatment.
@@ -22,7 +22,8 @@ case for web integration work.
 - Included API slice: health and capability checks, synthetic analysis, OpenAPI docs, and
   generated-artifact retrieval.
 - Excluded: ML, neural networks, training, PyTorch, DICOM, databases, transmission or analysis of
-  uploaded real X-rays, and authentication.
+  uploaded real X-rays, authentication, and a command-line interface — the web API is the only
+  supported way to run an analysis.
 - A Cobb result records the exact vertebrae, endplates, and signed/acute angles used, so it is
   auditable rather than only returning a scalar.
 
@@ -36,11 +37,20 @@ Requires Python 3.12 (dependencies are hash-pinned against it in `requirements.l
 make install
 source .venv/bin/activate
 python apps/generate_synthetic_fixture.py
-scoliosis-v1a analyze \
-  --image tests/fixtures/synthetic_xray.png \
-  --landmarks tests/fixtures/synthetic_landmarks.json \
-  --output-dir data/outputs/synthetic
+make api
 ```
+
+In a second terminal:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/demo/synthetic
+```
+
+Open `http://127.0.0.1:8000` for the responsive browser experience or
+`http://127.0.0.1:8000/docs` for the interactive API documentation. See
+[api/README.md](api/README.md) for the endpoint contract and configuration. The selected real image
+stays in the browser for preview only; the API currently analyzes the bundled synthetic case, not
+uploaded radiographs. There is no CLI — the web API is the only interface.
 
 Run verification (same checks CI runs):
 
@@ -49,19 +59,6 @@ make verify
 ```
 
 Changed a dependency in `pyproject.toml`? Regenerate the lock files with `make lock`.
-
-Run the research API:
-
-```bash
-uvicorn scoliosis_platform.api:app --reload
-curl -X POST http://127.0.0.1:8000/api/v1/demo/synthetic
-```
-
-Open `http://127.0.0.1:8000` for the responsive browser experience or
-`http://127.0.0.1:8000/docs` for the interactive API documentation. See
-[api/README.md](api/README.md) for the endpoint contract and configuration. The selected real image
-stays in the browser for preview only; the API currently analyzes the bundled synthetic case, not
-uploaded radiographs.
 
 Run the complete application with Docker Compose:
 

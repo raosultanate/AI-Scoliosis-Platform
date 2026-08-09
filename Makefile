@@ -3,7 +3,7 @@ VENV_PYTHON := .venv/bin/python
 DOCKER_IMAGE ?= ai-scoliosis-platform:local
 DOCKER_PORT ?= 8000
 
-.PHONY: install lock test lint typecheck verify fixture demo api \
+.PHONY: install lock test lint typecheck verify fixture api \
 	docker-build docker-run docker-up docker-down docker-config docker-smoke
 
 install:
@@ -32,11 +32,6 @@ verify: test lint typecheck
 
 fixture:
 	$(VENV_PYTHON) apps/generate_synthetic_fixture.py
-
-demo: fixture
-	.venv/bin/scoliosis-v1a analyze --image tests/fixtures/synthetic_xray.png \
-		--landmarks tests/fixtures/synthetic_landmarks.json \
-		--output-dir data/outputs/synthetic --config config/v1a.yaml
 
 api:
 	$(VENV_PYTHON) -m uvicorn scoliosis_platform.api:app --reload

@@ -29,9 +29,6 @@ dev = [
   "types-PyYAML>=6.0,<7",
 ]
 
-[project.scripts]
-scoliosis-v1a = "scoliosis_platform.cli:main"
-
 [tool.hatch.build.targets.wheel]
 packages = ["backend/scoliosis_platform"]
 
