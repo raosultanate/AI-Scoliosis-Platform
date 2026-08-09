@@ -14,12 +14,17 @@ WORKDIR /build
 # Create a venv rather than installing into the system Python so the runtime
 # stage can copy /opt/venv wholesale without dragging in build-time state.
 RUN python -m venv /opt/venv
-# Copy only what `pip install .` needs (metadata + source) before installing,
-# so Docker's layer cache is invalidated by source changes, not unrelated files.
+# Install pinned, hash-verified dependencies from requirements.lock.txt first
+# (regenerate with `uv pip compile pyproject.toml --python-version 3.12
+# --generate-hashes -o requirements.lock.txt` after changing pyproject.toml)
+# so the build is reproducible and every wheel's checksum is verified, then
+# install the project itself with --no-deps since its deps are already met.
+COPY requirements.lock.txt ./
+RUN /opt/venv/bin/python -m pip install --upgrade pip && \
+    /opt/venv/bin/python -m pip install --require-hashes -r requirements.lock.txt
 COPY pyproject.toml README.md ./
 COPY src ./src
-RUN /opt/venv/bin/python -m pip install --upgrade pip && \
-    /opt/venv/bin/python -m pip install .
+RUN /opt/venv/bin/python -m pip install --no-deps .
 
 
 # --- Stage 2: runtime --------------------------------------------------------
@@ -38,10 +43,15 @@ ENV PATH="/opt/venv/bin:${PATH}" \
 
 # libglib2.0-0/libgomp1 are shared-library dependencies of opencv-python-headless.
 # Install them, then drop apt's package lists in the same layer to keep the
-# image small. Also provision a fixed-uid, non-root, login-less service account
+# image small. perl-base ships in the base image but nothing here uses it, and
+# it's a recurring source of unfixed critical/high CVEs, so purge it too; the
+# app never invokes apt/dpkg again so removing an "essential" package is safe
+# post-build. Also provision a fixed-uid, non-root, login-less service account
 # up front so nothing later in the build needs to run as root.
 RUN apt-get update && \
     apt-get install --yes --no-install-recommends libglib2.0-0 libgomp1 && \
+    apt-get purge --yes --allow-remove-essential perl-base && \
+    apt-get autoremove --yes && \
     rm -rf /var/lib/apt/lists/* && \
     groupadd --gid 10001 appuser && \
     useradd \

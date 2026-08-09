@@ -3,13 +3,21 @@ VENV_PYTHON := .venv/bin/python
 DOCKER_IMAGE ?= ai-scoliosis-platform:local
 DOCKER_PORT ?= 8000
 
-.PHONY: install test lint typecheck verify fixture demo api \
+.PHONY: install lock test lint typecheck verify fixture demo api \
 	docker-build docker-run docker-up docker-down docker-config docker-smoke
 
 install:
 	$(PYTHON) -m venv .venv
 	$(VENV_PYTHON) -m pip install --upgrade pip
-	$(VENV_PYTHON) -m pip install -e '.[dev]'
+	$(VENV_PYTHON) -m pip install --require-hashes -r requirements-dev.lock.txt
+	$(VENV_PYTHON) -m pip install --no-deps -e .
+
+# Regenerate the hash-pinned lock files after changing pyproject.toml deps.
+lock:
+	uv pip compile pyproject.toml --python-version 3.12 --generate-hashes \
+		-o requirements.lock.txt
+	uv pip compile pyproject.toml --extra dev --python-version 3.12 --generate-hashes \
+		-o requirements-dev.lock.txt
 
 test:
 	$(VENV_PYTHON) -m pytest -q --cov=src/scoliosis_platform --cov-report=term-missing
