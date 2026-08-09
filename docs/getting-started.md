@@ -2,19 +2,27 @@
 
 ## Prerequisites
 
-- Python 3.10 or later
+- Python 3.12 — dependencies are hash-pinned to this version in `requirements.lock.txt` /
+  `requirements-dev.lock.txt` so installs are reproducible and match what Docker and CI use.
+  (The package itself declares `requires-python >= 3.10`, so an unpinned `pip install -e '.[dev]'`
+  on an older 3.10/3.11 interpreter can still work, but you'll be resolving dependency versions
+  fresh rather than the verified ones — prefer 3.12.) On macOS: `brew install python@3.12`.
 - A raster radiograph and matching landmark file
 - No model weights, GPU, or training environment are needed for Version 1A
 
 ## Install and verify
 
 ```bash
-python3 -m venv .venv
+make install                # creates .venv, installs hash-verified pinned dependencies
 source .venv/bin/activate
-python -m pip install -e '.[dev]'
 python apps/generate_synthetic_fixture.py
 pytest
 ```
+
+By default `make install` uses whatever `python3` resolves to on your `PATH`. If that isn't 3.12,
+override it: `make install PYTHON=/opt/homebrew/bin/python3.12` (or wherever your 3.12 binary lives).
+
+Changed a dependency in `pyproject.toml`? Run `make lock` to regenerate both lock files.
 
 ## Run one study
 

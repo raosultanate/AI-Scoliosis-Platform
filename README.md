@@ -1,5 +1,7 @@
 # AI Scoliosis Platform
 
+[![CI](https://github.com/raosultanate/AI-Scoliosis-Platform/actions/workflows/ci.yml/badge.svg)](https://github.com/raosultanate/AI-Scoliosis-Platform/actions/workflows/ci.yml)
+
 Production-oriented foundation for a long-lived medical imaging platform. The active scope is
 **Version 1A**: consume clinician-provided vertebral landmarks, compute Cobb angle geometry,
 validate against an optional reference, and produce traceable visual and machine-readable output.
@@ -26,29 +28,27 @@ case for web integration work.
 
 ## Quick start
 
+Requires Python 3.12 (dependencies are hash-pinned against it in `requirements.lock.txt` /
+`requirements-dev.lock.txt`, matching what Docker and CI install; see
+[docs/getting-started.md](docs/getting-started.md) if you only have an older Python on your machine).
+
 ```bash
-python3 -m venv .venv
+make install
 source .venv/bin/activate
-python -m pip install -e '.[dev]'
+python apps/generate_synthetic_fixture.py
 scoliosis-v1a analyze \
   --image tests/fixtures/synthetic_xray.png \
   --landmarks tests/fixtures/synthetic_landmarks.json \
   --output-dir data/outputs/synthetic
 ```
 
-To create the deterministic synthetic fixture first:
+Run verification (same checks CI runs):
 
 ```bash
-python apps/generate_synthetic_fixture.py
+make verify
 ```
 
-Run verification:
-
-```bash
-pytest
-ruff check .
-mypy backend
-```
+Changed a dependency in `pyproject.toml`? Regenerate the lock files with `make lock`.
 
 Run the research API:
 
