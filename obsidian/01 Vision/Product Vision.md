@@ -13,5 +13,5 @@ posture, goniometry, exercise recognition, coaching, progress tracking, clinicia
 patient-facing tools.
 
 The sequencing constraint is central: validate data contracts and geometry before introducing ML.
-See [[Version 1A Roadmap]].
-
+See [[Version 1A Roadmap]] for the current foundation and [[End-to-End AI Web App Roadmap]] for the
+planned FastAPI, keypoint-model, deployment, and validation path.
