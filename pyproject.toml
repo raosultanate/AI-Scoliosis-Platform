@@ -33,11 +33,11 @@ dev = [
 scoliosis-v1a = "scoliosis_platform.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/scoliosis_platform"]
+packages = ["backend/scoliosis_platform"]
 
 [tool.hatch.build]
 include = [
-  "src/scoliosis_platform/**/*.py",
+  "backend/scoliosis_platform/**/*.py",
 ]
 
 [tool.pytest.ini_options]

@@ -24,13 +24,13 @@ jobs:
           python -m pip install --no-deps -e .
 
       - name: Test
-        run: python -m pytest -q --cov=src/scoliosis_platform --cov-report=term-missing
+        run: python -m pytest -q --cov=backend/scoliosis_platform --cov-report=term-missing
 
       - name: Lint
         run: python -m ruff check .
 
       - name: Typecheck
-        run: python -m mypy src
+        run: python -m mypy backend
 
   docker:
     name: docker build / scan / smoke test

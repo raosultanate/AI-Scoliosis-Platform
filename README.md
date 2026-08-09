@@ -47,7 +47,7 @@ Run verification:
 ```bash
 pytest
 ruff check .
-mypy src
+mypy backend
 ```
 
 Run the research API:
@@ -84,7 +84,8 @@ supported. Dataset-specific formats belong behind the `LandmarkReader` interface
 ```text
 apps/                       runnable utilities
 config/                     non-secret defaults
-src/scoliosis_platform/
+frontend/                   static browser UI (no build step)
+backend/scoliosis_platform/
   dataset/                  images and landmark adapters
   geometry/                 pure geometric computation
   visualization/            rendering only

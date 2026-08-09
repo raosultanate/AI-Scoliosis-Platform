@@ -23,7 +23,7 @@ COPY requirements.lock.txt ./
 RUN /opt/venv/bin/python -m pip install --upgrade pip && \
     /opt/venv/bin/python -m pip install --require-hashes -r requirements.lock.txt
 COPY pyproject.toml README.md ./
-COPY src ./src
+COPY backend ./backend
 RUN /opt/venv/bin/python -m pip install --no-deps .
 
 

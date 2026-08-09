@@ -20,13 +20,13 @@ lock:
 		-o requirements-dev.lock.txt
 
 test:
-	$(VENV_PYTHON) -m pytest -q --cov=src/scoliosis_platform --cov-report=term-missing
+	$(VENV_PYTHON) -m pytest -q --cov=backend/scoliosis_platform --cov-report=term-missing
 
 lint:
 	$(VENV_PYTHON) -m ruff check .
 
 typecheck:
-	$(VENV_PYTHON) -m mypy src
+	$(VENV_PYTHON) -m mypy backend
 
 verify: test lint typecheck
 
